@@ -19,8 +19,34 @@ return {
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
-      --
-      require('mini.indentscope').setup { symbol = '│' }
+
+      -- Shows the current indent
+      require('mini.indentscope').setup {
+        symbol = '│',
+      }
+
+      -- Highlights word under cursor
+      require('mini.cursorword').setup()
+    end,
+    init = function()
+      vim.api.nvim_create_autocmd('FileType', {
+        desc = 'Disable indentscope for certain filetypes',
+        pattern = {
+          'neo-tree',
+          'help',
+          'Trouble',
+          'trouble',
+          'lazy',
+          'mason',
+          'notify',
+          'better_term',
+          'toggleterm',
+          'lazyterm',
+        },
+        callback = function()
+          vim.b.miniindentscope_disable = true
+        end,
+      })
     end,
   },
 }
