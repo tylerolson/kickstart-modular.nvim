@@ -1,7 +1,7 @@
 return {
   'akinsho/bufferline.nvim',
   dependencies = 'nvim-tree/nvim-web-devicons',
-
+  after = 'cattppuccin',
   config = function()
     require('bufferline').setup {
       options = {
@@ -24,8 +24,11 @@ return {
             separator = false, -- this is stupid
           },
         },
-
         numbers = 'ordinal',
+        highlights = require('catppuccin.groups.integrations.bufferline').get(),
+        pick = { -- Use numbers for pick
+          alphabet = '1234567890',
+        },
       },
     }
 

@@ -10,6 +10,7 @@ return {
     config = function()
       ---@diagnostic disable-next-line: missing-fields
       require('catppuccin').setup {
+        flavour = 'macchiato',
         integrations = {
           mason = true,
           which_key = true,

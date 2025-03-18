@@ -7,7 +7,7 @@ return {
   config = function()
     require('lualine').setup {
       options = {
-        theme = 'catppuccin',
+        -- no need for theme, lualine will autodetect/autogenerate one!
         globalstatus = true,
       },
       extentions = {
