@@ -31,5 +31,8 @@ return {
 
     vim.keymap.set('n', 'gb', '<Cmd>BufferLinePick<CR>', { silent = true, desc = 'Pick a buffer' })
     vim.keymap.set('n', 'gB', '<Cmd>BufferLinePickClose<CR>', { silent = true, desc = 'Delete a buffer' })
+
+    vim.keymap.set('n', 'g[', '<Cmd>BufferLineCyclePrev<CR>', { silent = true, desc = 'Previous buffer' })
+    vim.keymap.set('n', 'g]', '<Cmd>BufferLineCycleNext<CR>', { silent = true, desc = 'Next buffer' })
   end,
 }
