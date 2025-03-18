@@ -26,7 +26,7 @@ return {
       }
 
       -- Highlights word under cursor
-      require('mini.cursorword').setup()
+      -- require('mini.cursorword').setup()
     end,
     init = function()
       vim.api.nvim_create_autocmd('FileType', {

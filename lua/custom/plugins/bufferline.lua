@@ -39,3 +39,4 @@ return {
     vim.keymap.set('n', 'g]', '<Cmd>BufferLineCycleNext<CR>', { silent = true, desc = 'Next buffer' })
   end,
 }
+-- vim: ts=2 sts=2 sw=2 et

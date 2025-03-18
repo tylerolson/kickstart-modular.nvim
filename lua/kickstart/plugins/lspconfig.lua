@@ -208,15 +208,11 @@ return {
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+      local mason_registry = require 'mason-registry'
+      local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
+
       local servers = {
         -- clangd = {},
-        gopls = {
-          settings = {
-            gopls = {
-              semanticTokens = true,
-            },
-          },
-        },
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -225,8 +221,32 @@ return {
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
-        --
+
+        gopls = {
+          settings = {
+            gopls = {
+              semanticTokens = true,
+            },
+          },
+        },
+
+        volar = {},
+
+        -- In vue files, pass off the html and css to the volar server, and use the TS server for TS
+        -- https://github.com/vuejs/language-tools?tab=readme-ov-file#hybrid-mode-configuration-requires-vuelanguage-server-version-200
+        ts_ls = {
+          init_options = {
+            plugins = {
+              {
+                name = '@vue/typescript-plugin',
+                location = vue_language_server_path,
+                languages = { 'vue' },
+              },
+            },
+          },
+          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+        },
+        tailwindcss = {},
 
         lua_ls = {
           -- cmd = { ... },
@@ -260,6 +280,7 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'prettierd', -- Prettier as a daemon
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
