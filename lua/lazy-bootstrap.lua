@@ -13,4 +13,6 @@ end
 local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
 
+vim.keymap.set('n', '<leader>l', '<Cmd>Lazy<CR>', { desc = 'Open Lazy' })
+
 -- vim: ts=2 sts=2 sw=2 et

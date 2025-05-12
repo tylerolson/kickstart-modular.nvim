@@ -1,3 +1,4 @@
+local ecma_script = { 'prettierd', 'prettier', stop_after_first = true }
 return {
   { -- Autoformat
     'stevearc/conform.nvim',
@@ -31,11 +32,14 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        go = { 'goimports', 'gofumpt' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascript = ecma_script,
+        typescript = ecma_script,
+        vue = ecma_script,
       },
     },
   },
