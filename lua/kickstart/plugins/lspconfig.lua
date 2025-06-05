@@ -207,8 +207,6 @@ return {
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-      local mason_registry = require 'mason-registry'
-      local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
 
       local servers = {
         -- clangd = {},
@@ -226,25 +224,89 @@ return {
             gopls = {
               gofumpt = true,
               semanticTokens = true,
+              hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+              },
             },
           },
         },
 
-        volar = {},
-
         -- In vue files, pass off the html and css to the volar server, and use the TS server for TS
         -- https://github.com/vuejs/language-tools?tab=readme-ov-file#hybrid-mode-configuration-requires-vuelanguage-server-version-200
-        ts_ls = {
-          init_options = {
-            plugins = {
-              {
-                name = '@vue/typescript-plugin',
-                location = vue_language_server_path,
-                languages = { 'vue' },
+        -- ts_ls = {
+        --   init_options = {
+        --     plugins = {
+        --       {
+        --         name = '@vue/typescript-plugin',
+        --         location = vim.fn.expand '$MASON/packages' .. '/vue-language-server' .. '/node_modules/@vue/language-server',
+        --         languages = { 'vue' },
+        --       },
+        --     },
+        --   },
+        -- },
+
+        vtsls = {
+          filetypes = {
+            'javascript',
+            'javascriptreact',
+            'javascript.jsx',
+            'typescript',
+            'typescriptreact',
+            'typescript.tsx',
+            'vue',
+          },
+          settings = {
+            complete_function_calls = true,
+            vtsls = {
+              enableMoveToFileCodeAction = true,
+              autoUseWorkspaceTsdk = true,
+              experimental = {
+                maxInlayHintLength = 30,
+                completion = {
+                  enableServerSideFuzzyMatch = true,
+                },
+              },
+              typescript = {
+                updateImportsOnFileMove = { enabled = 'always' },
+                suggest = {
+                  completeFunctionCalls = true,
+                },
+                inlayHints = {
+                  enumMemberValues = { enabled = true },
+                  functionLikeReturnTypes = { enabled = true },
+                  parameterNames = { enabled = 'literals' },
+                  parameterTypes = { enabled = true },
+                  propertyDeclarationTypes = { enabled = true },
+                  variableTypes = { enabled = false },
+                },
+              },
+              tsserver = {
+                globalPlugins = {
+                  {
+                    name = '@vue/typescript-plugin',
+                    location = vim.fn.expand '$MASON/packages' .. '/vue-language-server' .. '/node_modules/@vue/language-server',
+                    languages = { 'vue' },
+                    configNamespace = 'typescript',
+                    enableForWorkspaceTypeScriptVersions = true,
+                  },
+                },
               },
             },
           },
-          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+        },
+
+        vue_ls = {
+          init_options = {
+            vue = {
+              hybridMode = true,
+            },
+          },
         },
         tailwindcss = {},
 

@@ -40,6 +40,7 @@ return {
         javascript = ecma_script,
         typescript = ecma_script,
         vue = ecma_script,
+        json = { 'prettierd', 'prettier', 'jsonls', stop_after_first = true },
       },
     },
   },

@@ -15,6 +15,7 @@ return {
         'gosum',
         'html',
         'javascript',
+        'json',
         'lua',
         'luadoc',
         'markdown',
